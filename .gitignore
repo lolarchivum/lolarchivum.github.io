@@ -1,0 +1,11 @@
+*.*~
+.#*
+
+soulstorm/_posts/timeline/timeline
+
+# Jekyll
+
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
