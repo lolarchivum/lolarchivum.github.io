@@ -17,12 +17,27 @@ function add_elem(root, curr) {
     }
 }
 
-for (let i = 0; i < pagesize; i++) {
-    fetch(`./Top1000/${i}.json`).then(resp => resp.json()).then(json => {
-	document.getElementById("root").innerHTML += `<h1><a href="./Top100/${i}.json">${json.title}</a></h1>`
-	add_elem(document.getElementById("root"), json)
+function loadPage(page) {
+  let promises = []
+
+  for (let i = page; i < page+pagesize; i++) {
+    promises.push(fetch(`./Top1000/${i}.json`))
+  }
+
+
+  Promise.all(promises).then(responses => Promise.all(responses.map(r => r.json()))).then(jsons => {
+    jsons.sort((a,b) => a.up_votes < b.up_votes);
+
+    document.getElementById("root").innerHTML =""
+
+    jsons.forEach(json => {
+      document.getElementById("root").innerHTML += `<h1>${json.title}</h1>`
+      add_elem(document.getElementById("root"), json)
     })
+  }).catch(e => {console.log(e)})
 }
+
+loadPage(0)
 
 //let count = pagesize
 
@@ -30,16 +45,8 @@ let select = document.querySelector("#list")
 
 select.addEventListener("change", () => {
     let start = (Number(select.value)-1)*pagesize
-    
-    document.getElementById("root").innerHTML = ""
-    for (let i = start; i < start+pagesize; i++) {
-	fetch(`./Top1000/${i}.json`).then(resp => resp.json()).then(json => {
-	    document.getElementById("root").innerHTML += `<h1><a href="./Top100/${i}.json">${json.title}</a></h1>`
-	    add_elem(document.getElementById("root"), json)
-	})
-    }
 
-    //count += pagesize
+    loadPage(start)
 })
 
 document.querySelector("#top").addEventListener("click", () => {
