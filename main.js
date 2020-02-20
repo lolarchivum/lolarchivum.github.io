@@ -24,18 +24,22 @@ for (let i = 0; i < pagesize; i++) {
     })
 }
 
-let count = pagesize
+//let count = pagesize
 
-document.querySelector("#btn").addEventListener("click", () => {
+let select = document.querySelector("#list")
+
+select.addEventListener("change", () => {
+    let start = (Number(select.value)-1)*pagesize
+    
     document.getElementById("root").innerHTML = ""
-    for (let i = count; i < count+pagesize; i++) {
+    for (let i = start; i < start+pagesize; i++) {
 	fetch(`./Top1000/${i}.json`).then(resp => resp.json()).then(json => {
 	    document.getElementById("root").innerHTML += `<h1><a href="./Top100/${i}.json">${json.title}</a></h1>`
 	    add_elem(document.getElementById("root"), json)
 	})
     }
 
-    count += pagesize
+    //count += pagesize
 })
 
 document.querySelector("#top").addEventListener("click", () => {
