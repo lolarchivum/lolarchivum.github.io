@@ -31,7 +31,7 @@ let page = 0
 let results = []
 
 function loadPage() {
-  document.getElementById("currpage").innerHTML = `${page+1}. Oldal`
+  document.getElementById("currpage").innerHTML = `${page+1}. / ${results.length}.`
   let url = ""
 
   if (results.length == 0) {
@@ -51,15 +51,13 @@ function loadPage() {
 }
 
 function switch_page(diff) {
-  if (term != "" || player != "") {
-    page += diff
-    page = Math.max(0, page)
+  page += diff
+  page = Math.max(0, page)
 
-    if (results.length > 0)
-      page = Math.min(page, results.length-1)
+  if (results.length > 0)
+    page = Math.min(page, results.length-1)
 
-    loadPage()
-  }
+  loadPage()
 }
 
 document.querySelector("#big_left").addEventListener("click", () => {switch_page(-10)})
@@ -67,41 +65,61 @@ document.querySelector("#big_right").addEventListener("click", () => {switch_pag
 document.querySelector("#left").addEventListener("click", () => {switch_page(-1)})
 document.querySelector("#right").addEventListener("click", () => {switch_page(1)})
 
-document.querySelector("#send").addEventListener("click", () => {
-  player = document.querySelector("#player").value.toLowerCase()
-
-  if (player != "") {
-    page = 0
-    results = []
-    loadPage()
-  }
-})
 
 
 document.querySelector("#top").addEventListener("click", () => {
   window.scrollTo(0,0);
 })
 
+function compare(a,b, method) {
+  switch (method) {
+    case "upvotes":
+      return b[1].up_votes - a[1].up_votes
+
+    case "downvotes":
+      return b[1].down_votes - a[1].down_votes
+
+    case "date":
+      return b[1].date - a[1].date
+  }
+
+}
+
 
 fetch("./index.json").then(resp=>resp.json()).then(index => {
   document.querySelector("#search").addEventListener("click", () => {
-
     term = document.querySelector("#searched").value
 
-    if (term != "") {
-      const entries = Object.entries(index)
-      results = []
+    const entries = Object.entries(index)
+    results = []
+    page = 0
 
-      for (const [key, val] of entries) {
-        if (val.title.toLowerCase().includes(term.toLowerCase())) {
-          results.push(["./posztok/"+key.toLowerCase(), val])
-        }
+    for (const [key, val] of entries) {
+      if (val.title.toLowerCase().includes(term.toLowerCase())) {
+        results.push(["./posztok/"+key.toLowerCase(), val])
       }
-
-      results.sort((a,b) => b[1].up_votes - a[1].up_votes)
-
-      page = 0
-      loadPage()
     }
+
+    results.sort((a,b) => compare(a,b, "downvotes"))
+
+    loadPage()
+  })
+
+  document.querySelector("#send").addEventListener("click", () => {
+    player = document.querySelector("#player").value.toLowerCase()
+
+    const entries = Object.entries(index)
+    results = []
+    page = 0
+
+    for (const [key, val] of entries) {
+      if (val.poster.toLowerCase().includes(player.toLowerCase())) {
+        results.push(["./posztok/"+key.toLowerCase(), val])
+      }
+    }
+
+    results.sort((a,b) => compare(a,b, "downvotes"))
+
+    loadPage()
   })
 })
