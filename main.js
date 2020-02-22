@@ -9,7 +9,30 @@ function add_elem(root, curr) {
     .replace(/_(.*?)_/g, "<i>$1</i>")
     .replace(/\[(.*?)\]\((.*?)\)/g, "<a href='$2'>$1</a>")
 
-  elem.innerHTML = `<h3>${curr.poster} (+${curr.up_votes}/-${curr.down_votes}) | ${curr.date}</h3><p>${body}</p>`
+  let date = new Date(curr.date)
+  let month = date.getMonth()+1
+  if (month < 10) {
+    month = "0"+month
+  }
+
+  let day = date.getDate()
+  if (day < 10) {
+    day = "0"+day
+  }
+
+  let hour = date.getHours()
+  if (hour < 10) {
+    hour = "0"+hour
+  }
+
+  let minutes = date.getMinutes()
+  if (minutes < 10) {
+    minutes = "0"+minutes
+  }
+
+  let actualDate = `${date.getFullYear()}.${month}.${day}., ${hour}:${minutes}`
+
+  elem.innerHTML = `<h3>${curr.poster} (+${curr.up_votes}/-${curr.down_votes}) | ${actualDate}</h3><p>${body}</p>`
 
   root.appendChild(elem)
 
@@ -80,11 +103,16 @@ function compare(a,b, method) {
       return b[1].down_votes - a[1].down_votes
 
     case "date":
-      return b[1].date - a[1].date
+      {
+      let adate = new Date(a[1].date)
+      let bdate = new Date(b[1].date)
+      return (adate > bdate) - (adate < bdate)
+      }
   }
 
 }
 
+let sorter = "upvotes"
 
 fetch("./index.json").then(resp=>resp.json()).then(index => {
   document.querySelector("#search").addEventListener("click", () => {
@@ -99,8 +127,6 @@ fetch("./index.json").then(resp=>resp.json()).then(index => {
         results.push(["./posztok/"+key.toLowerCase(), val])
       }
     }
-
-    results.sort((a,b) => compare(a,b, "downvotes"))
 
     loadPage()
   })
@@ -118,8 +144,17 @@ fetch("./index.json").then(resp=>resp.json()).then(index => {
       }
     }
 
-    results.sort((a,b) => compare(a,b, "downvotes"))
+    results.sort((a,b) => compare(a,b, sorter))
 
     loadPage()
+  })
+
+  document.querySelector("#sort").addEventListener("change", () => {
+    if (results.length != 0) {
+      page = 0
+      sorter = document.querySelector("#sort").value
+      results.sort((a,b) => compare(a,b, sorter))
+      loadPage()
+    }
   })
 })
