@@ -37,7 +37,9 @@ function loadPage() {
   if (results.length == 0) {
     url = `./posztok/${player}/${page}.json`
   } else {
-    url = results[page]
+    url = results[page][0]
+
+    console.log(results[page])
   }
 
   fetch(url).then(resp => resp.json()).then(json => {
@@ -88,14 +90,15 @@ fetch("./index.json").then(resp=>resp.json()).then(index => {
 
     if (term != "") {
       const entries = Object.entries(index)
-
       results = []
+
       for (const [key, val] of entries) {
-        if (val.toLowerCase().includes(term.toLowerCase())) {
-          results.push("./posztok/"+key.toLowerCase())
-          console.log(val)
+        if (val.title.toLowerCase().includes(term.toLowerCase())) {
+          results.push(["./posztok/"+key.toLowerCase(), val])
         }
       }
+
+      results.sort((a,b) => b[1].up_votes - a[1].up_votes)
 
       page = 0
       loadPage()
