@@ -2,86 +2,86 @@
 ---
 
 body {
-    background: #0b1922;
-    color: #efefef;
-    font-family: sans-serif;
-    word-wrap: break-word;
+  background: #0b1922;
+  color: #efefef;
+  font-family: sans-serif;
+  word-wrap: break-word;
 
-    font-size: 1.2rem;
-    line-height: 1.6;
+  font-size: 1.2rem;
+  line-height: 1.6;
 }
 
 h1, h2 {
-    text-align: center;
+  text-align: center;
 }
 
 #root {
-    width: 60%;
-    margin-left: auto;
-    margin-right: auto;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 
 .comment {
-    border: 4px solid black;
-    margin: 1rem;
+  border: 4px solid black;
+  margin: 1rem;
 
-    background: #0d3844;
+  background: #0d3844;
 
-    p, h3 {
-	padding-left: 1rem;
-	padding-right: 1rem;
-    }
+  p, h3 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 
-    h3 {
-	border-bottom: 4px solid black;
-	padding-bottom: 0.5rem;
-	margin-top: 0.5rem;
-    }
+  h3 {
+    border-bottom: 4px solid black;
+    padding-bottom: 0.5rem;
+    margin-top: 0.5rem;
+  }
 }
 
 .replies {
-    //margin-left: 2rem;
-    background: rgba(64, 64, 64, 0.3);
-    padding: 0.5rem;
+  //margin-left: 2rem;
+  background: rgba(64, 64, 64, 0.3);
+  padding: 0.5rem;
 
-    border-top: 4px solid black;
+  border-top: 4px solid black;
 
 }
 
 #sidebar {
-    position: fixed;
-    right: 0;
-    top: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+
+  width: 20%;
+
+  padding: 1rem;
+  background: #222;
+
+  #top {
+    margin-bottom: 0.5rem;
+  }
+
+  .flexer {
     display: flex;
-    flex-direction: column;
 
-    width: 20%;
-
-    padding: 1rem;
-    background: #222;
-
-    #top {
-	margin-bottom: 0.5rem;
+    input[type="text"] {
+      flex-basis: 100%;
     }
+  }
 
-    .flexer {
-	display: flex;
+  #controls {
+    display: flex;
+    align-items: center;
 
-	input[type="text"] {
-	    flex-basis: 100%;
-	}
+    margin-top: 0.5rem;
+
+    span {
+      flex-basis: 100%;
+      text-align: center;
     }
-
-    #controls {
-	display: flex;
-	align-items: center;
-
-	margin-top: 0.5rem;
-
-	span {
-	    margin-left: 0.4rem;
-	    margin-right: 0.4rem;
-	}
-    }
+  }
 }
