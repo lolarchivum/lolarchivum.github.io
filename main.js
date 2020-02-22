@@ -63,10 +63,7 @@ document.querySelector("#right").addEventListener("click", () => {
 
 document.querySelector("#send").addEventListener("click", () => {
     page = 0
-    player = document.querySelector("#player").value
-
-    //TODO: Add checking.
-    //page = Math.max(0, page)
+    player = document.querySelector("#player").value.toLowerCase()
 
     loadPage(page)
 })
