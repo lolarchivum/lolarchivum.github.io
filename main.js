@@ -1,5 +1,3 @@
-const pagesize = 25;
-
 function add_elem(root, curr) {
   let elem = document.createElement("div")
   elem.className = "comment"
@@ -76,4 +74,24 @@ document.querySelector("#send").addEventListener("click", () => {
 
 document.querySelector("#top").addEventListener("click", () => {
   window.scrollTo(0,0);
+})
+
+
+fetch("./index.json").then(resp=>resp.json()).then(index => {
+    document.querySelector("#search").addEventListener("click", () => {
+	let results = []
+
+	let term = document.querySelector("#searched").value
+
+	const entries = Object.entries(index)
+
+	for (const [key, val] of entries) {
+	    if (val.toLowerCase().includes(term.toLowerCase())) {
+		results.push(key)
+		console.log(val)
+	    }
+	}
+
+	console.log(results)
+    })
 })
