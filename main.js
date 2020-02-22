@@ -19,13 +19,23 @@ let player = "Nemin"
 let page = 0
 
 
-function loadPage(page) {
+let results = []
+
+function loadPage() {
     document.getElementById("currpage").innerHTML = `${page+1}. Oldal`
-    fetch(`./posztok/${player}/${page}.json`).then(resp => resp.json()).then(json => {
-      document.getElementById("root").innerHTML = `<h1>${json.title}</h1>`
-      add_elem(document.getElementById("root"), json)
+    let url = ""
+    
+    if (results.length == 0) {
+	url = `./posztok/${player}/${page}.json`
+    } else {
+	url = results[page]
+    }
+
+    fetch(url).then(resp => resp.json()).then(json => {
+	document.getElementById("root").innerHTML = `<h1>${json.title}</h1>`
+	add_elem(document.getElementById("root"), json)
     }).catch(e => {
-      document.getElementById("root").innerHTML = `<h1>Valami hiba történt...</h1><center><p>Vagy nincs ilyen játékos, vagy valami más gond van, mindenesetre itt a hibaüzenet:</p><p>"${e}"</p></center>`
+	document.getElementById("root").innerHTML = `<h1>Valami hiba történt...</h1><center><p>Vagy nincs ilyen játékos, vagy valami más gond van, mindenesetre itt a hibaüzenet:</p><p>"${e}"</p></center>`
     })
 }
 
@@ -33,39 +43,42 @@ document.querySelector("#big_left").addEventListener("click", () => {
     page -= 10
     page = Math.max(0, page)
 
-    loadPage(page)
+    loadPage()
 })
 
 document.querySelector("#big_right").addEventListener("click", () => {
     page += 10
 
-    //TODO: Add checking.
-    //page = Math.max(0, page)
+    //TODO: Add more checking.
+    if (results.length > 0)
+	page = Math.min(page, results.length-1)
 
-    loadPage(page)
+    loadPage()
 })
 
 document.querySelector("#left").addEventListener("click", () => {
     page -= 1
     page = Math.max(0, page)
 
-    loadPage(page)
+    loadPage()
 })
 
 document.querySelector("#right").addEventListener("click", () => {
     page += 1
 
-    //TODO: Add checking.
-    //page = Math.max(0, page)
+    //TODO: Add more checking.
+    if (results.length > 0)
+	page = Math.min(page, results.length-1)
 
-    loadPage(page)
+    loadPage()
 })
 
 document.querySelector("#send").addEventListener("click", () => {
     page = 0
     player = document.querySelector("#player").value.toLowerCase()
+    results = []
 
-    loadPage(page)
+    loadPage()
 })
 
 
@@ -76,19 +89,20 @@ document.querySelector("#top").addEventListener("click", () => {
 
 fetch("./index.json").then(resp=>resp.json()).then(index => {
     document.querySelector("#search").addEventListener("click", () => {
-	let results = []
 
 	let term = document.querySelector("#searched").value
 
 	const entries = Object.entries(index)
 
+	results = []
 	for (const [key, val] of entries) {
 	    if (val.toLowerCase().includes(term.toLowerCase())) {
-		results.push(key)
+		results.push("./posztok/"+key.toLowerCase())
 		console.log(val)
 	    }
 	}
 
-	console.log(results)
+	page = 0
+	loadPage()
     })
 })
