@@ -1,20 +1,20 @@
 const pagesize = 25;
 
 function add_elem(root, curr) {
-    let elem = document.createElement("div")
-    elem.className = "comment"
-    elem.innerHTML = `<h3>${curr.poster} (+${curr.up_votes}/-${curr.down_votes}) | ${curr.date}</h3><p>${curr.body.replace(/\n/g,"</p><p>")}</p>`
+  let elem = document.createElement("div")
+  elem.className = "comment"
+  elem.innerHTML = `<h3>${curr.poster} (+${curr.up_votes}/-${curr.down_votes}) | ${curr.date}</h3><p>${curr.body.replace(/\n/g,"</p><p>")}</p>`
 
-    root.appendChild(elem)
+  root.appendChild(elem)
 
-    if (curr.replies.length > 0) {
-	elem.innerHTML += "<div class='replies'></div>"
-	let replies = elem.querySelector(".replies")
+  if (curr.replies.length > 0) {
+    elem.innerHTML += "<div class='replies'></div>"
+    let replies = elem.querySelector(".replies")
 
-	curr.replies.forEach(r => {
-	    add_elem(replies, r)
-	})
-    }
+    curr.replies.forEach(r => {
+      add_elem(replies, r)
+    })
+  }
 }
 
 function loadPage(page) {
@@ -44,11 +44,11 @@ loadPage(0)
 let select = document.querySelector("#list")
 
 select.addEventListener("change", () => {
-    let start = (Number(select.value)-1)*pagesize
+  let start = (Number(select.value)-1)*pagesize
 
-    loadPage(start)
+  loadPage(start)
 })
 
 document.querySelector("#top").addEventListener("click", () => {
-    window.scrollTo(0,0);
+  window.scrollTo(0,0);
 })
