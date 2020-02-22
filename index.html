@@ -6,11 +6,24 @@
   <body>
     <h1>Charon</h1>
     <h2>A League of Legends Magyar Fórumának Archívuma</h2>
-    <div id="root"></div>
+
+    <div id="root">
+      <p style="text-align: center; width: 60%; margin-left: auto; margin-right: auto;">Üdvözöllek a Magyar LoL Fórum archívumán. Bár az oldal elszállt, de a posztok egy részét sikerült kimentenem, melyeket itt bárki elérhet. Csak írj be egy nevet a jobb alsó sarokba és nyomj az "OK" gombra és kezdődhet a nosztalgia. <b>-- Nemin</b></p>
+    </div>
+
     <div id="sidebar">
       <input type="button" value="Az oldal tetejére ugrás." id="top">
-      <select id="list">
-      </select>
+      <div>
+	<input value="Nemin" id="player">
+	<input type="button" value="OK" id="send">
+      </div>
+      <div>
+	<input type="button" value="<<" id="big_left">
+	<input type="button" value="<" id="left">
+	<span id="currpage">1. Oldal</span>
+	<input type="button" value=">" id="right">
+	<input type="button" value=">>" id="big_right">
+      </div>
     </div>
     <script src="main.js"></script>
   </body>

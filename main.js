@@ -17,37 +17,62 @@ function add_elem(root, curr) {
   }
 }
 
+let player = "Nemin"
+let page = 0
+
+
 function loadPage(page) {
-  let promises = []
-
-  for (let i = page; i < page+pagesize; i++) {
-    promises.push(fetch(`./Top1000/${i}.json`))
-  }
-
-
-  Promise.all(promises).then(responses => Promise.all(responses.map(r => r.json()))).then(jsons => {
-    jsons.sort((a,b) => a.up_votes < b.up_votes);
-
-    document.getElementById("root").innerHTML =""
-
-    jsons.forEach(json => {
-      document.getElementById("root").innerHTML += `<h1>${json.title}</h1>`
+    document.getElementById("currpage").innerHTML = `${page+1}. Oldal`
+    fetch(`./posztok/${player}/${page}.json`).then(resp => resp.json()).then(json => {
+      document.getElementById("root").innerHTML = `<h1>${json.title}</h1>`
       add_elem(document.getElementById("root"), json)
+    }).catch(e => {
+      document.getElementById("root").innerHTML = `<h1>Valami hiba történt...</h1><center><p>Vagy nincs ilyen játékos, vagy valami más gond van, mindenesetre itt a hibaüzenet:</p><p>"${e}"</p></center>`
     })
-  }).catch(e => {console.log(e)})
 }
 
-loadPage(0)
+document.querySelector("#big_left").addEventListener("click", () => {
+    page -= 10
+    page = Math.max(0, page)
 
-//let count = pagesize
-
-let select = document.querySelector("#list")
-
-select.addEventListener("change", () => {
-  let start = (Number(select.value)-1)*pagesize
-
-  loadPage(start)
+    loadPage(page)
 })
+
+document.querySelector("#big_right").addEventListener("click", () => {
+    page += 10
+
+    //TODO: Add checking.
+    //page = Math.max(0, page)
+
+    loadPage(page)
+})
+
+document.querySelector("#left").addEventListener("click", () => {
+    page -= 1
+    page = Math.max(0, page)
+
+    loadPage(page)
+})
+
+document.querySelector("#right").addEventListener("click", () => {
+    page += 1
+
+    //TODO: Add checking.
+    //page = Math.max(0, page)
+
+    loadPage(page)
+})
+
+document.querySelector("#send").addEventListener("click", () => {
+    page = 0
+    player = document.querySelector("#player").value
+
+    //TODO: Add checking.
+    //page = Math.max(0, page)
+
+    loadPage(page)
+})
+
 
 document.querySelector("#top").addEventListener("click", () => {
   window.scrollTo(0,0);
