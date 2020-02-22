@@ -1,18 +1,26 @@
 function add_elem(root, curr) {
-  let elem = document.createElement("div")
-  elem.className = "comment"
-  elem.innerHTML = `<h3>${curr.poster} (+${curr.up_votes}/-${curr.down_votes}) | ${curr.date}</h3><p>${curr.body.replace(/\n/g,"</p><p>")}</p>`
+    let elem = document.createElement("div")
+    elem.className = "comment"
 
-  root.appendChild(elem)
+    let body = curr.body
+	.replace(/\n/g,"</p><p>")
+	.replace(/\*\*(.*?)\*\*/g, "<b>$1</b>")
+	.replace(/\*(.*?)\*/g, "<i>$1</i>")
+	.replace(/_(.*?)_/g, "<i>$1</i>")
+	.replace(/\[(.*?)\]\((.*?)\)/g, "<a href='$2'>$1</a>")
 
-  if (curr.replies.length > 0) {
-    elem.innerHTML += "<div class='replies'></div>"
-    let replies = elem.querySelector(".replies")
+    elem.innerHTML = `<h3>${curr.poster} (+${curr.up_votes}/-${curr.down_votes}) | ${curr.date}</h3><p>${body}</p>`
 
-    curr.replies.forEach(r => {
-      add_elem(replies, r)
-    })
-  }
+    root.appendChild(elem)
+
+    if (curr.replies.length > 0) {
+	elem.innerHTML += "<div class='replies'></div>"
+	let replies = elem.querySelector(".replies")
+
+	curr.replies.forEach(r => {
+	    add_elem(replies, r)
+	})
+    }
 }
 
 let player = "Nemin"

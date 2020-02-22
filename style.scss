@@ -6,6 +6,9 @@ body {
     color: #efefef;
     font-family: sans-serif;
     word-wrap: break-word;
+
+    font-size: 1.2rem;
+    line-height: 1.6;
 }
 
 h1, h2 {
@@ -13,7 +16,7 @@ h1, h2 {
 }
 
 #root {
-    width: 160ch;
+    width: 60%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -48,15 +51,37 @@ h1, h2 {
 
 #sidebar {
     position: fixed;
-    right: 10;
-    bottom: 10;
+    right: 0;
+    top: 0;
     display: flex;
     flex-direction: column;
+
+    width: 20%;
 
     padding: 1rem;
     background: #222;
 
-    #list {
+    #top {
+	margin-bottom: 0.5rem;
+    }
+
+    .flexer {
+	display: flex;
+
+	input[type="text"] {
+	    flex-basis: 100%;
+	}
+    }
+
+    #controls {
+	display: flex;
+	align-items: center;
+
 	margin-top: 0.5rem;
+
+	span {
+	    margin-left: 0.4rem;
+	    margin-right: 0.4rem;
+	}
     }
 }

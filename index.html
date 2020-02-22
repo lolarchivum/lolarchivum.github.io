@@ -7,22 +7,44 @@
     <h1>Charon</h1>
     <h2>A League of Legends Magyar Fórumának Archívuma</h2>
 
-
     <div id="root">
-      <p style="text-align: center; width: 60%; margin-left: auto; margin-right: auto;">Üdvözöllek a Magyar LoL Fórum archívumán. Bár az oldal elszállt, de a posztok egy részét sikerült kimentenem, melyeket itt bárki elérhet. Csak írj be egy nevet a jobb alsó sarokba és nyomj az "OK" gombra és kezdődhet a nosztalgia. <b>-- Nemin</b></p>
+      <p style="width: 60%; margin-left: auto; margin-right: auto;
+      margin-bottom: 2rem;">Üdvözöllek a Magyar LoL Fórum
+      archívumán. Bár az oldal megszűnt, de a
+      posztok <span style="border-bottom: 1px dashed #e2e2e2;"
+      title="Körülbelül huszonegyezer posztból tizenötezret.">egy
+      részét</span> sikerült kimentenem, melyeket itt bárki
+      elérhet. Ezt egy utolsó ajándékként szánom nektek, hálaképp a
+      fórumon szerzett sok kedves emlékért. Köszönöm. <b>--
+      Nemin</b></p>
+
+      <div class="comment">
+      <p><center><b>Használati utasítás:</b></center></p>
+      <p>A felső mezővel kereshetsz a posztok címei között. Tehát ha
+      mondjuk egy poszt címe az, hogy "Tökre örülök, hogy a Riot
+      bezárta a fórumát, ezzel több évnyi közösségi történelmet
+      törölve el" és rákeresel arra a szóra, hogy "riot", akkor többek
+      között ezt is kihozza.</p>
+      <p>Az alsó mezővel pedig egy-egy játékos posztjait listázhatod
+      ki. Tehát például, ha azt írod be, hogy "Nemin", akkor láthatod,
+      hogy miket posztoltam anno a fórumra.</p>
+      <p>Az alsó gombokkal pedig léptethetsz az oldalak között. A két
+      jelből álló gombok tíz lapot, az egy jelből állók pedig egyet
+	ugranak, előre vagy vissza.</p>
+      </div>
     </div>
 
     <div id="sidebar">
       <input type="button" value="Az oldal tetejére ugrás." id="top">
-    <div>
-      <input placeholder="Keresés..." id="searched">
+    <div class="flexer">
+      <input placeholder="Keresés..." type="text" id="searched">
       <input type="button" value="OK" id="search">
     </div>
-      <div>
-	<input placeholder="Játékosnév..." id="player">
+      <div class="flexer">
+	<input placeholder="Játékosnév..." type="text" id="player">
 	<input type="button" value="OK" id="send">
       </div>
-      <div>
+      <div id="controls">
 	<input type="button" value="<<" id="big_left">
 	<input type="button" value="<" id="left">
 	<span id="currpage">1. Oldal</span>
