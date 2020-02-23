@@ -1,3 +1,9 @@
+let sorter = "upvotes"
+let term = ""
+let player = ""
+let page = 0
+let results = []
+
 function add_elem(root, curr) {
   let elem = document.createElement("div")
   elem.className = "comment"
@@ -47,24 +53,11 @@ function add_elem(root, curr) {
   }
 }
 
-let term = ""
-let player = ""
-let page = 0
-
-
-let results = []
-
 function loadPage() {
+  window.scrollTo(0,0);
   document.getElementById("currpage").innerHTML = `${page+1}. / ${results.length}.`
-  let url = ""
-
-  if (results.length == 0) {
-    url = `./posztok/${player}/${page}.json`
-  } else {
-    url = results[page][0]
-
-    console.log(results[page])
-  }
+  results.sort((a,b) => compare(a,b, sorter))
+  let url = results[page][0]
 
   fetch(url).then(resp => resp.json()).then(json => {
     document.getElementById("root").innerHTML = `<h1>${json.title}</h1>`
@@ -75,13 +68,13 @@ function loadPage() {
 }
 
 function switch_page(diff) {
-  page += diff
-  page = Math.max(0, page)
-
-  if (results.length > 0)
+  if (results.length > 0) {
+    page += diff
+    page = Math.max(0, page)
     page = Math.min(page, results.length-1)
 
-  loadPage()
+    loadPage()
+  }
 }
 
 document.querySelector("#big_left").addEventListener("click", () => {switch_page(-10)})
@@ -110,10 +103,8 @@ function compare(a,b, method) {
       return (adate > bdate) - (adate < bdate)
       }
   }
-
 }
 
-let sorter = "upvotes"
 
 fetch("./index.json").then(resp=>resp.json()).then(index => {
   document.querySelector("#search").addEventListener("click", () => {
@@ -145,8 +136,6 @@ fetch("./index.json").then(resp=>resp.json()).then(index => {
       }
     }
 
-    results.sort((a,b) => compare(a,b, sorter))
-
     loadPage()
   })
 
@@ -154,7 +143,6 @@ fetch("./index.json").then(resp=>resp.json()).then(index => {
     if (results.length != 0) {
       page = 0
       sorter = document.querySelector("#sort").value
-      results.sort((a,b) => compare(a,b, sorter))
       loadPage()
     }
   })

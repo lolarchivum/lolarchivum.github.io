@@ -19,6 +19,10 @@ body {
 
   font-size: 1.2rem;
   line-height: 1.6;
+
+  a {
+    color: aliceblue;
+  }
 }
 
 #backdrop {
@@ -35,47 +39,34 @@ body {
   border: 2px solid #94724D;
   border-top: none !important;
   border-bottom: none !important;
+
+  #root {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-right: 0.5rem;
+
+    .replies .comment {
+      margin-left: 0.5rem;
+
+      margin-bottom: 1rem;
+    }
+
+    .comment {
+      background: #123;
+
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+
+      border: 2px solid #94724D;
+      box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    }
+  }
 }
 
-.replies .comment {
-  margin-left: 0.5rem;
-
-  margin-bottom: 1rem;
-}
-
-.comment {
-  background: #123;
-
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-
-  border: 2px solid #94724D;
-  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-}
-
-#logo {
-  display: block;
-  max-width: 80%;
-
-  margin-top: 1rem;
-  margin-left: auto;
-  margin-right: auto;
-  filter: brightness(2);
-}
-
-#title {
-  flex-grow: 1;
-}
-
-#root {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  margin-right: 2rem;
-}
 
 #rightpane {
   position: sticky;
@@ -90,46 +81,59 @@ body {
   padding-right: 1rem;
   padding-left: 1rem;
   border-right: 2px solid #94724D;
-}
 
-#sidebar {
-  display: flex;
-  flex-direction: column;
+  #title {
+    flex-grow: 1;
 
-  #top {
-    margin-bottom: 0.5rem;
-  }
+    #logo {
+      display: block;
+      max-width: 80%;
 
-  .flexer {
-    display: flex;
-
-    input[type="text"] {
-      flex-basis: 100%;
+      margin-top: 1rem;
+      margin-left: auto;
+      margin-right: auto;
+      filter: brightness(2);
     }
   }
 
-  #controls {
+  #sidebar {
     display: flex;
-    //height: 4rem;
-    align-items: center;
+    flex-direction: column;
 
-    margin-top: 0.5rem;
-
-    span {
-      font-weight: bold;
-      margin-left: 1rem;
-      margin-right: 1rem;
-      cursor: pointer;
-      font-size: 1.4rem;
+    #top {
+      margin-bottom: 0.5rem;
     }
 
-    #currpage {
-      text-align: center;
-      margin-top: 0;
-      margin-bottom: 0;
-      flex-grow: 1;
-      flex-shrink: 0;
-      flex-basis: 15%;
+    .flexer {
+      display: flex;
+
+      input[type="text"] {
+        flex-basis: 100%;
+      }
+    }
+
+    #controls {
+      display: flex;
+      align-items: center;
+
+      margin-top: 0.5rem;
+
+      span {
+        font-weight: bold;
+        margin-left: 1rem;
+        margin-right: 1rem;
+        cursor: pointer;
+        font-size: 1.4rem;
+      }
+
+      #currpage {
+        text-align: center;
+        margin-top: 0;
+        margin-bottom: 0;
+        flex-grow: 1;
+        flex-shrink: 0;
+        flex-basis: 15%;
+      }
     }
   }
 }
