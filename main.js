@@ -7,6 +7,7 @@ function add_elem(root, curr) {
     .replace(/\*\*(.*?)\*\*/g, "<b>$1</b>")
     .replace(/\*(.*?)\*/g, "<i>$1</i>")
     .replace(/_(.*?)_/g, "<i>$1</i>")
+    .replace(/~~(.*?)~~/g, "<s>$1</s>")
     .replace(/\[(.*?)\]\((.*?)\)/g, "<a href='$2'>$1</a>")
 
   let date = new Date(curr.date)

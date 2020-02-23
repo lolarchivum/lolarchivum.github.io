@@ -1,65 +1,100 @@
 ---
 ---
 
+h1, h2 {
+  text-align: center;
+}
+
 body {
-  background: #0b1922;
-  color: #efefef;
-  font-family: sans-serif;
   word-wrap: break-word;
+
+  background-color: black;
+  background-image: url("./header_v2.png");
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+
+  color: #abaaa8;
+  margin-top: 0;
+  margin-bottom: 0;
 
   font-size: 1.2rem;
   line-height: 1.6;
 }
 
-h1, h2 {
-  text-align: center;
+#backdrop {
+  width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+
+  margin-top: 0;
+  margin-bottom: 0;
+  background: #123;
+
+  display: grid;
+  grid-template-columns: 1100px auto;
+  border: 2px solid #94724D;
+  border-top: none !important;
+  border-bottom: none !important;
+}
+
+.replies .comment {
+  margin-left: 0.5rem;
+
+  margin-bottom: 1rem;
+}
+
+.comment {
+  background: #123;
+
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
+  border: 2px solid #94724D;
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+#logo {
+  display: block;
+  max-width: 80%;
+
+  margin-top: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  filter: brightness(2);
+}
+
+#title {
+  flex-grow: 1;
 }
 
 #root {
-  width: 60%;
-  margin-left: auto;
-  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin-right: 2rem;
 }
 
-
-.comment {
-  border: 4px solid black;
-  margin: 1rem;
-
-  background: #0d3844;
-
-  p, h3 {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-
-  h3 {
-    border-bottom: 4px solid black;
-    padding-bottom: 0.5rem;
-    margin-top: 0.5rem;
-  }
-}
-
-.replies {
-  //margin-left: 2rem;
-  background: rgba(64, 64, 64, 0.3);
-  padding: 0.5rem;
-
-  border-top: 4px solid black;
-
-}
-
-#sidebar {
-  position: fixed;
-  right: 0;
+#rightpane {
+  position: sticky;
+  height: 100vh;
   top: 0;
   display: flex;
   flex-direction: column;
 
-  width: 20%;
+  background: #234;
+  margin: 0;
 
-  padding: 1rem;
-  background: #222;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  border-right: 2px solid #94724D;
+}
+
+#sidebar {
+  display: flex;
+  flex-direction: column;
 
   #top {
     margin-bottom: 0.5rem;
@@ -75,13 +110,26 @@ h1, h2 {
 
   #controls {
     display: flex;
+    //height: 4rem;
     align-items: center;
 
     margin-top: 0.5rem;
 
     span {
-      flex-basis: 100%;
+      font-weight: bold;
+      margin-left: 1rem;
+      margin-right: 1rem;
+      cursor: pointer;
+      font-size: 1.4rem;
+    }
+
+    #currpage {
       text-align: center;
+      margin-top: 0;
+      margin-bottom: 0;
+      flex-grow: 1;
+      flex-shrink: 0;
+      flex-basis: 15%;
     }
   }
 }
