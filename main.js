@@ -39,7 +39,11 @@ function add_elem(root, curr) {
 
   let actualDate = `${date.getFullYear()}.${month}.${day}., ${hour}:${minutes}`
 
-  elem.innerHTML = `<h3>${curr.poster} (+${curr.up_votes}/-${curr.down_votes}) | ${actualDate}</h3><p>${body}</p>`
+  if (curr.title != null) {
+    elem.innerHTML=`<h1>${curr.title}</h1><hr>`
+  }
+
+  elem.innerHTML += `<h3>${curr.poster} (+${curr.up_votes}/-${curr.down_votes}) | ${actualDate}</h3><p>${body}</p>`
 
   root.appendChild(elem)
 
@@ -60,7 +64,7 @@ function loadPage() {
   let url = results[page][0]
 
   fetch(url).then(resp => resp.json()).then(json => {
-    document.getElementById("root").innerHTML = `<h1>${json.title}</h1>`
+    document.getElementById("root").innerHTML = ""
     add_elem(document.getElementById("root"), json)
   }).catch(e => {
     document.getElementById("root").innerHTML = `<h1>Valami hiba történt...</h1><center><p>Vagy nincs ilyen játékos, vagy valami más gond van, mindenesetre itt a hibaüzenet:</p><p>"${e}"</p></center>`
