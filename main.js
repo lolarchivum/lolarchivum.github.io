@@ -43,7 +43,7 @@ function add_elem(root, curr) {
     elem.innerHTML=`<h1>${curr.title}</h1><hr>`
   }
 
-  elem.innerHTML += `<h3>${curr.poster} (+${curr.up_votes}/-${curr.down_votes}) | ${actualDate}</h3><p>${body}</p>`
+  elem.innerHTML += `<h3><span class="name" onclick='loadProfile("${curr.poster}")'>${curr.poster}</span> (+${curr.up_votes}/-${curr.down_votes}) | ${actualDate}</h3><p>${body}</p>`
 
   root.appendChild(elem)
 
@@ -55,6 +55,11 @@ function add_elem(root, curr) {
       add_elem(replies, r)
     })
   }
+}
+
+function loadProfile(name) {
+  document.querySelector("#player").value = name
+  document.querySelector("#send").click()
 }
 
 function loadPage() {

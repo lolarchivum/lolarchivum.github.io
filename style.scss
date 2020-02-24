@@ -1,6 +1,10 @@
 ---
 ---
 
+$col1: #123;//#102030;
+$col2: #182838;//#152535;
+
+
 h1,h2 {text-align: center;}
 
 h1,h3 {
@@ -41,7 +45,7 @@ body {
 
   margin-top: 0;
   margin-bottom: 0;
-  background: #123;
+  background: $col1;
 
   display: grid;
   grid-template-columns: 1100px auto;
@@ -62,6 +66,11 @@ body {
       margin-bottom: 1rem;
     }
 
+    .name {
+      cursor: pointer;
+      color: #94724D;
+    }
+
     .comment {
       padding-left: 1.5rem;
       padding-right: 1.5rem;
@@ -69,12 +78,9 @@ body {
       padding-bottom: 1rem;
 
       border: 2px solid #94724D;
-      box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+      box-shadow: 7px 7px 5px 0px rgba(0,0,0,0.75);
     }
   }
-
-  $col1: #102030;
-  $col2: #152535;
 
   .comment {
     background: $col1;
@@ -107,7 +113,7 @@ body {
   display: flex;
   flex-direction: column;
 
-  background: #234;
+  background: $col1/1.5;
   margin: 0;
 
   padding-right: 1rem;
