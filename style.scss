@@ -63,8 +63,6 @@ body {
     }
 
     .comment {
-      background: #123;
-
       padding-left: 1.5rem;
       padding-right: 1.5rem;
       padding-top: 1rem;
@@ -74,6 +72,31 @@ body {
       box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
     }
   }
+
+  $col1: #102030;
+  $col2: #152535;
+
+  .comment {
+    background: $col1;
+  }
+
+  {% for i in (0..20) %}
+    {% assign line = ".comment" %}
+
+    {% for o in (0..i) %}
+      {% assign line = line | prepend: ".comment .replies " %}
+    {% endfor %}
+
+    {{line}} {
+      {% assign cycle = i | modulo: 2 %}
+      {% if cycle != 0 %}
+        background: $col1;
+      {% else %}
+        background: $col2;
+      {% endif %}
+      }
+
+  {% endfor %}
 }
 
 
