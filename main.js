@@ -38,12 +38,21 @@ function add_elem(root, curr) {
   }
 
   let actualDate = `${date.getFullYear()}.${month}.${day}., ${hour}:${minutes}`
+  let title = ""
 
   if (curr.title != null) {
-    elem.innerHTML=`<h1>${curr.title}</h1><hr>`
+    title = `<h1>${curr.title}</h1><hr>`
   }
 
-  elem.innerHTML += `<h3><span class="name" onclick='loadProfile("${curr.poster}")'>${curr.poster}</span> (+${curr.up_votes}/-${curr.down_votes}) | ${actualDate}</h3><p>${body}</p>`
+  title += `<h3><span class="name" onclick='loadProfile("${curr.poster}")'>${curr.poster}</span> (+${curr.up_votes}/-${curr.down_votes}) | ${actualDate}`
+
+  if (curr.subforum != null) {
+    title += `, itt: "${curr.subforum}"`
+  }
+
+  title += "</h3>"
+
+  elem.innerHTML += `${title}<p>${body}</p>`
 
   root.appendChild(elem)
 
