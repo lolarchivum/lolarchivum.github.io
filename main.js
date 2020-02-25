@@ -1,6 +1,7 @@
 let sorter = "upvotes"
 let term = ""
 let player = ""
+let subf = ""
 let page = 0
 let results = []
 
@@ -47,7 +48,7 @@ function add_elem(root, curr) {
   title += `<h3><span class="name" onclick='loadProfile("${curr.poster}")'>${curr.poster}</span> (+${curr.up_votes}/-${curr.down_votes}) | ${actualDate}`
 
   if (curr.subforum != null) {
-    title += `, itt: "${curr.subforum}"`
+    title += `, itt: <span onclick='loadCategory("${curr.subforum}")'>${curr.subforum}</span>`
   }
 
   title += "</h3>"
@@ -69,6 +70,11 @@ function add_elem(root, curr) {
 function loadProfile(name) {
   document.querySelector("#player").value = name
   document.querySelector("#send").click()
+}
+
+function loadCategory(cat) {
+  document.querySelector("#subforum").value = cat
+    document.querySelector("#subforum").dispatchEvent(new Event("change"))
 }
 
 function loadPage() {
@@ -123,38 +129,35 @@ function compare(a,b, method) {
   }
 }
 
-
 fetch("./index.json").then(resp=>resp.json()).then(index => {
-  document.querySelector("#search").addEventListener("click", () => {
-    term = document.querySelector("#searched").value
+    function select_posts(category, comp) {
+	const entries = Object.entries(index)
+	results = []
+	page = 0
 
-    const entries = Object.entries(index)
-    results = []
-    page = 0
+	for (const [key, val] of entries) {
+	    if (val[category].toLowerCase().includes(comp.toLowerCase())) {
+		results.push(["./posztok/"+key.toLowerCase(), val])
+	    }
+	}
 
-    for (const [key, val] of entries) {
-      if (val.title.toLowerCase().includes(term.toLowerCase())) {
-        results.push(["./posztok/"+key.toLowerCase(), val])
-      }
+	loadPage()
     }
 
-    loadPage()
+
+  document.querySelector("#subforum").addEventListener("change", () => {
+    subf = document.querySelector("#subforum").value
+    select_posts("subforum", subf)
+  })
+    
+  document.querySelector("#search").addEventListener("click", () => {
+    term = document.querySelector("#searched").value
+    select_posts("title", term)
   })
 
   document.querySelector("#send").addEventListener("click", () => {
     player = document.querySelector("#player").value.toLowerCase()
-
-    const entries = Object.entries(index)
-    results = []
-    page = 0
-
-    for (const [key, val] of entries) {
-      if (val.poster.toLowerCase().includes(player.toLowerCase())) {
-        results.push(["./posztok/"+key.toLowerCase(), val])
-      }
-    }
-
-    loadPage()
+    select_posts("poster", player)
   })
 
   document.querySelector("#sort").addEventListener("change", () => {
