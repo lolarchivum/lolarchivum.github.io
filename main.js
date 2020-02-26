@@ -53,7 +53,26 @@ function add_elem(root, curr) {
 
   title += "</h3>"
 
-  elem.innerHTML += `${title}<p>${body}</p>`
+  let embed =""
+  if (curr.embed) {
+    embed = "<div>"
+
+    if (curr.embed.url) {
+      embed += `<a href='${curr.embed.url}'` + curr.embed.url + "</a>"
+    }
+
+    if (curr.embed.description) {
+      embed += "<p>" + curr.embed.description + "</p>"
+    }
+
+    if (curr.embed.image) {
+      embed += "<img src='" + curr.embed.image + "'>"
+    }
+
+    embed += "</div>"
+  }
+
+  elem.innerHTML += `${title}${embed}<p>${body}</p>`
 
   root.appendChild(elem)
 
