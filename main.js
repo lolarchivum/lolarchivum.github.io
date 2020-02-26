@@ -55,19 +55,20 @@ function add_elem(root, curr) {
 
   let embed =""
   if (curr.embed) {
-    embed = "<div>"
+    embed = "<div class='embed'>"
+
+    if (curr.embed.image) {
+      embed += "<img src='" + curr.embed.image + "'>"
+    }
 
     if (curr.embed.url) {
-      embed += `<a href='${curr.embed.url}'` + curr.embed.url + "</a>"
+      embed += `<a href='${curr.embed.url}'>[Link]</a>`
     }
 
     if (curr.embed.description) {
       embed += "<p>" + curr.embed.description + "</p>"
     }
 
-    if (curr.embed.image) {
-      embed += "<img src='" + curr.embed.image + "'>"
-    }
 
     embed += "</div>"
   }
