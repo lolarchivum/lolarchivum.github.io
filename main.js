@@ -15,6 +15,7 @@ function add_elem(root, curr) {
     .replace(/\*(.*?)\*/g, "<i>$1</i>")
     .replace(/_(.*?)_/g, "<i>$1</i>")
     .replace(/~~(.*?)~~/g, "<s>$1</s>")
+    .replace(/(http(s*):\/\/.*\.(jpg|png))/, "<img src='$1' style='max-width: 100%;'>")
     .replace(/\[(.*?)\]\((.*?)\)/g, "<a href='$2'>$1</a>")
 
   let date = new Date(curr.date)
@@ -94,7 +95,7 @@ function loadProfile(name) {
 
 function loadCategory(cat) {
   document.querySelector("#subforum").value = cat
-    document.querySelector("#subforum").dispatchEvent(new Event("change"))
+  document.querySelector("#subforum").dispatchEvent(new Event("change"))
 }
 
 function loadPage() {
@@ -107,7 +108,7 @@ function loadPage() {
     document.getElementById("root").innerHTML = ""
     add_elem(document.getElementById("root"), json)
   }).catch(e => {
-    document.getElementById("root").innerHTML = `<h1>Valami hiba történt...</h1><center><p>Vagy nincs ilyen játékos, vagy valami más gond van, mindenesetre itt a hibaüzenet:</p><p>"${e}"</p></center>`
+    document.getElementById("root").innerHTML = `<div class="comment"><h1>Valami hiba történt...</h1><center><p>Nagy valószínűséggel olyan ember próbáltad megnyitni, aki a böngésző számára értelmezhetetlen karaktereket használ a nevében. Sajnos eddig még nem tudtam rájönni ezt, hogy lehet orvosolni, Mindenesetre nézz a jobb alsó sarokba, hátha átléphetsz egy másik (remélhetőleg működő) posztra. (Hibaüzenet: "${e}")</p></center></div>`
   })
 }
 
@@ -126,8 +127,6 @@ document.querySelector("#big_right").addEventListener("click", () => {switch_pag
 document.querySelector("#left").addEventListener("click", () => {switch_page(-1)})
 document.querySelector("#right").addEventListener("click", () => {switch_page(1)})
 
-
-
 document.querySelector("#top").addEventListener("click", () => {
   window.scrollTo(0,0);
 })
@@ -142,34 +141,41 @@ function compare(a,b, method) {
 
     case "date":
       {
-      let adate = new Date(a[1].date)
-      let bdate = new Date(b[1].date)
-      return (adate > bdate) - (adate < bdate)
+        let adate = new Date(a[1].date)
+        let bdate = new Date(b[1].date)
+        return (adate > bdate) - (adate < bdate)
+      }
+
+    case "revdate":
+      {
+        let adate = new Date(b[1].date)
+        let bdate = new Date(a[1].date)
+        return (adate > bdate) - (adate < bdate)
       }
   }
 }
 
 fetch("./index.json").then(resp=>resp.json()).then(index => {
-    function select_posts(category, comp) {
-	const entries = Object.entries(index)
-	results = []
-	page = 0
+  function select_posts(category, comp) {
+    const entries = Object.entries(index)
+    results = []
+    page = 0
 
-	for (const [key, val] of entries) {
-	    if (val[category].toLowerCase().includes(comp.toLowerCase())) {
-		results.push(["./posztok/"+key.toLowerCase(), val])
-	    }
-	}
-
-	loadPage()
+    for (const [key, val] of entries) {
+      if (val[category].toLowerCase().includes(comp.toLowerCase())) {
+        results.push(["./posztok/"+key.toLowerCase(), val])
+      }
     }
+
+    loadPage()
+  }
 
 
   document.querySelector("#subforum").addEventListener("change", () => {
     subf = document.querySelector("#subforum").value
     select_posts("subforum", subf)
   })
-    
+
   document.querySelector("#search").addEventListener("click", () => {
     term = document.querySelector("#searched").value
     select_posts("title", term)
@@ -181,9 +187,9 @@ fetch("./index.json").then(resp=>resp.json()).then(index => {
   })
 
   document.querySelector("#sort").addEventListener("change", () => {
+    sorter = document.querySelector("#sort").value
     if (results.length != 0) {
       page = 0
-      sorter = document.querySelector("#sort").value
       loadPage()
     }
   })
