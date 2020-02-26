@@ -36,10 +36,10 @@ function add_elem(root, curr) {
     title = `<h1>${curr.title}</h1><hr>`
   }
 
-  title += `<h3><span class="name" onclick='loadProfile("${curr.poster}")'>${curr.poster}</span> (+${curr.up_votes}/-${curr.down_votes}) | ${actualDate}`
+  title += `<h3><span class="name" onclick='loadProfile("${curr.poster}")'>${curr.poster}</span> (+${curr.up_votes}/-${curr.down_votes}) – ${actualDate}`
 
   if (curr.subforum != null) {
-    title += `, itt: <span onclick='loadCategory("${curr.subforum}")'>${curr.subforum}</span>`
+    title += `, itt: <span class="name" onclick='loadCategory("${curr.subforum}")'>${curr.subforum}</span>`
   }
 
   title += "</h3>"
@@ -49,12 +49,21 @@ function add_elem(root, curr) {
     embed = "<div class='embed'>"
 
     if (curr.embed.image) {
-      embed += "<img src='" + curr.embed.image + "'>"
+      if (curr.embed.url) {
+        embed += `<a href='${curr.embed.url}'>`
+      }
+
+      embed += "<img alt='Embed image' src='" + curr.embed.image + "'>"
+
+      if (curr.embed.url) {
+        embed += "</a>"
+      }
+    } else {
+      if (curr.embed.url) {
+        embed += `<a href='${curr.embed.url}'>[Link]</a>`
+      }
     }
 
-    if (curr.embed.url) {
-      embed += `<a href='${curr.embed.url}'>[Link]</a>`
-    }
 
     if (curr.embed.description) {
       embed += "<p>" + curr.embed.description + "</p>"
