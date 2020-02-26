@@ -1,9 +1,14 @@
 let sorter = "upvotes"
-let term = ""
-let player = ""
-let subf = ""
 let page = 0
 let results = []
+
+function zero_pad(val) {
+  if (val < 10) {
+    return "0" + val
+  } else {
+    return val
+  }
+}
 
 function add_elem(root, curr) {
   let elem = document.createElement("div")
@@ -15,29 +20,14 @@ function add_elem(root, curr) {
     .replace(/\*(.*?)\*/g, "<i>$1</i>")
     .replace(/_(.*?)_/g, "<i>$1</i>")
     .replace(/~~(.*?)~~/g, "<s>$1</s>")
-    .replace(/(http(s*):\/\/.*\.(jpg|png))/, "<img src='$1' style='max-width: 100%;'>")
+    .replace(/(http(s*):\/\/.*\.(jpg|png|gif))/g, "<img src='$1' style='max-width: 100%;'>")
     .replace(/\[(.*?)\]\((.*?)\)/g, "<a href='$2'>$1</a>")
 
   let date = new Date(curr.date)
-  let month = date.getMonth()+1
-  if (month < 10) {
-    month = "0"+month
-  }
-
-  let day = date.getDate()
-  if (day < 10) {
-    day = "0"+day
-  }
-
-  let hour = date.getHours()
-  if (hour < 10) {
-    hour = "0"+hour
-  }
-
-  let minutes = date.getMinutes()
-  if (minutes < 10) {
-    minutes = "0"+minutes
-  }
+  let month = zero_pad(date.getMonth()+1)
+  let day = zero_pad(date.getDate())
+  let hour = zero_pad(date.getHours())
+  let minutes = zero_pad(date.getMinutes())
 
   let actualDate = `${date.getFullYear()}.${month}.${day}., ${hour}:${minutes}`
   let title = ""
@@ -172,18 +162,15 @@ fetch("./index.json").then(resp=>resp.json()).then(index => {
 
 
   document.querySelector("#subforum").addEventListener("change", () => {
-    subf = document.querySelector("#subforum").value
-    select_posts("subforum", subf)
+    select_posts("subforum", document.querySelector("#subforum").value)
   })
 
   document.querySelector("#search").addEventListener("click", () => {
-    term = document.querySelector("#searched").value
-    select_posts("title", term)
+    select_posts("title", document.querySelector("#searched").value)
   })
 
   document.querySelector("#send").addEventListener("click", () => {
-    player = document.querySelector("#player").value.toLowerCase()
-    select_posts("poster", player)
+    select_posts("poster", document.querySelector("#player").value)
   })
 
   document.querySelector("#sort").addEventListener("change", () => {
