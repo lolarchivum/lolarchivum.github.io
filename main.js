@@ -154,7 +154,7 @@ function compare(a,b, method) {
   }
 }
 
-fetch("./index.json").then(resp=>resp.json()).then(index => {
+fetch("./EUNE_HU/index.json").then(resp=>resp.json()).then(index => {
   function select_posts(category, comp) {
     const entries = Object.entries(index)
     results = []
@@ -162,7 +162,7 @@ fetch("./index.json").then(resp=>resp.json()).then(index => {
 
     for (const [key, val] of entries) {
       if (val[category].toLowerCase().includes(comp.toLowerCase())) {
-        results.push(["./NA_EN/"+key.toLowerCase(), val])
+        results.push(["./EUNE_HU/"+key.toLowerCase(), val])
       }
     }
 
