@@ -162,7 +162,7 @@ fetch("./index.json").then(resp=>resp.json()).then(index => {
 
     for (const [key, val] of entries) {
       if (val[category].toLowerCase().includes(comp.toLowerCase())) {
-        results.push(["./posztok/"+key.toLowerCase(), val])
+        results.push(["./NA_EN/"+key.toLowerCase(), val])
       }
     }
 
